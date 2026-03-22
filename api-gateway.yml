@@ -1,17 +1,33 @@
+server:
+  port: 8080
+
 spring:
   cloud:
     gateway:
       routes:
-        - id: product-service
+        - id: product-service-api
           uri: lb://product-service
           predicates:
-            - Path=/api/products/**,/product-swagger/**
+            - Path=/api/products/**
+          filters:
+            - StripPrefix=0
+            - name: JwtAuthenticationFilter
+
+        - id: recommendation-service-api
+          uri: lb://recommendation-service
+          predicates:
+            - Path=/api/auth/**,/api/diary/**,/api/recommendations/**,/api/ai/**,/api/users/**
+          filters:
+            - StripPrefix=0
+            - name: JwtAuthenticationFilter
+
+        - id: web-ui
+          uri: lb://web-ui
+          predicates:
+            - Path=/,/login,/register,/dashboard/**,/products/**,/recommendations/**,/diary/**,/profile/**,/chat/**,/css/**,/js/**,/webjars/**
           filters:
             - StripPrefix=0
 
-        - id: recommendation-service
-          uri: lb://recommendation-service
-          predicates:
-            - Path=/api/auth/**,/api/diary/**,/api/recommendations/**,/api/ai/**,/recommendation-swagger/**
-          filters:
-            - StripPrefix=0
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
