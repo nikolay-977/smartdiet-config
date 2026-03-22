@@ -1,23 +1,29 @@
+server:
+  port: 8080
+
 spring:
+  application:
+    name: api-gateway
   cloud:
     gateway:
       routes:
-        - id: product-service-api
+        # Product Service routes
+        - id: product-service
           uri: lb://product-service
           predicates:
-            - Path=/api/products/**
+            - Path=/api/products/**,/api/admin/**
           filters:
             - StripPrefix=0
-            - name: JwtAuthenticationFilter
 
-        - id: recommendation-service-api
+        # Recommendation Service routes
+        - id: recommendation-service
           uri: lb://recommendation-service
           predicates:
-            - Path=/api/auth/**,/api/diary/**,/api/recommendations/**,/api/ai/**,/api/users/**
+            - Path=/api/auth/**,/api/diary/**,/api/recommendations/**,/api/preferences/**,/api/users/**,/api/ai/**
           filters:
             - StripPrefix=0
-            - name: JwtAuthenticationFilter
 
+        # Web UI routes
         - id: web-ui
           uri: lb://web-ui
           predicates:
@@ -25,6 +31,24 @@ spring:
           filters:
             - StripPrefix=0
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+jwt:
+  secret: ${JWT_SECRET:ZmY4NjMyYzZmYzVhMzg2ZDc4MTQ0ODI0MmE5N2Q0YzE5MjM0ZTQ5YzVhZGE0Njg2YzU0YjYxMzA5M2QzYzI4NjU4NQ==}
+  expiration: 3600000
+
 logging:
   level:
     org.springframework.cloud.gateway: INFO
+    com.nutrilogic.gateway: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
