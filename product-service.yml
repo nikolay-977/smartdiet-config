@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: product-service
   servlet:
     multipart:
       max-file-size: 100MB
@@ -24,19 +26,9 @@ spring:
           batch_size: 50
           fetch_size: 100
 
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,metrics
-  endpoint:
-    health:
-      show-details: always
+server:
+  port: 8082
 
 logging:
   level:
     com.nutrilogic.product: INFO
-    org.springframework.web: INFO
-    org.hibernate.SQL: WARN
-    org.hibernate.type.descriptor.sql.BasicBinder: WARN

@@ -13,7 +13,10 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
 
 jwt:
   secret: ${JWT_SECRET:ZmY4NjMyYzZmYzVhMzg2ZDc4MTQ0ODI0MmE5N2Q0YzE5MjM0ZTQ5YzVhZGE0Njg2YzU0YjYxMzA5M2QzYzI4NjU4NQ==}
@@ -23,3 +26,17 @@ eureka:
   client:
     service-url:
       defaultZone: http://eureka-server:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 5
+  instance:
+    prefer-ip-address: true
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.loadbalancer: DEBUG
+    com.netflix.discovery: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN

@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: recommendation-service
   datasource:
     url: jdbc:postgresql://postgres:5432/nutrilogic_recommendations
     username: ${DB_USER:postgres}
@@ -25,4 +27,3 @@ server:
 logging:
   level:
     com.nutrilogic.recommendation: INFO
-    org.springframework.web: INFO
