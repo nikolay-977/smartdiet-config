@@ -31,10 +31,6 @@ eureka:
     fetch-registry: true
     enabled: true
 
-jwt:
-  secret: ${JWT_SECRET:ZmY4NjMyYzZmYzVhMzg2ZDc4MTQ0ODI0MmE5N2Q0YzE5MjM0ZTQ5YzVhZGE0Njg2YzU0YjYxMzA5M2QzYzI4NjU4NQ==}
-  expiration: 3600000
-
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
