@@ -20,7 +20,7 @@ spring:
         - id: recommendation-service
           uri: lb://RECOMMENDATION-SERVICE
           predicates:
-            - Path=/api/auth/**,/api/diary/**,/api/recommendations/**,/api/preferences/**,/api/users/**,/apiai/**
+            - Path=/api/auth/**,/api/diary/**,/api/recommendations/**,/api/preferences/**,/api/users/**
           filters:
             - StripPrefix=0
 
