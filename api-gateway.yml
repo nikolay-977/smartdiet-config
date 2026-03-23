@@ -9,7 +9,7 @@ spring:
       routes:
         # Product Service routes
         - id: product-service
-          uri: lb://product-service
+          uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/api/products/**,/api/admin/**
           filters:
@@ -17,17 +17,9 @@ spring:
 
         # Recommendation Service routes
         - id: recommendation-service
-          uri: lb://recommendation-service
+          uri: lb://RECOMMENDATION-SERVICE
           predicates:
             - Path=/api/auth/**,/api/diary/**,/api/recommendations/**,/api/preferences/**,/api/users/**,/api/ai/**
-          filters:
-            - StripPrefix=0
-
-        # Web UI routes
-        - id: web-ui
-          uri: lb://web-ui
-          predicates:
-            - Path=/,/login,/register,/dashboard/**,/products/**,/recommendations/**,/diary/**,/profile/**,/chat/**,/css/**,/js/**,/webjars/**
           filters:
             - StripPrefix=0
 
@@ -37,6 +29,7 @@ eureka:
       defaultZone: http://eureka-server:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
+    enabled: true
 
 jwt:
   secret: ${JWT_SECRET:ZmY4NjMyYzZmYzVhMzg2ZDc4MTQ0ODI0MmE5N2Q0YzE5MjM0ZTQ5YzVhZGE0Njg2YzU0YjYxMzA5M2QzYzI4NjU4NQ==}
@@ -44,11 +37,15 @@ jwt:
 
 logging:
   level:
-    org.springframework.cloud.gateway: INFO
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.loadbalancer: DEBUG
     com.nutrilogic.gateway: DEBUG
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics
+        include: health,info,metrics,gates
+  endpoint:
+    gateway:
+      enabled: true
