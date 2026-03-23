@@ -6,6 +6,10 @@ spring:
     name: api-gateway
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: false
       routes:
         # Product Service routes
         - id: product-service
@@ -29,13 +33,16 @@ eureka:
       defaultZone: http://eureka-server:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
-    enabled: true
+    registry-fetch-interval-seconds: 5
+  instance:
+    hostname: api-gateway
+    prefer-ip-address: true
 
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
     org.springframework.cloud.loadbalancer: DEBUG
-    com.nutrilogic.gateway: DEBUG
+    com.netflix.discovery: DEBUG
 
 management:
   endpoints:
