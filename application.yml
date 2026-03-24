@@ -22,17 +22,13 @@ management:
       enabled: true
     prometheus:
       enabled: true
-  metrics:
-    export:
-      prometheus:
+  prometheus:
+    metrics:
+      export:
         enabled: true
+  metrics:
     tags:
       application: ${spring.application.name}
-    distribution:
-      slo:
-        http.server.requests: 10ms, 50ms, 100ms, 200ms, 500ms, 1s, 2s
-      percentiles-histogram:
-        http.server.requests: true
 
 jwt:
   secret: ${JWT_SECRET:ZmY4NjMyYzZmYzVhMzg2ZDc4MTQ0ODI0MmE5N2Q0YzE5MjM0ZTQ5YzVhZGE0Njg2YzU0YjYxMzA5M2QzYzI4NjU4NQ==}
