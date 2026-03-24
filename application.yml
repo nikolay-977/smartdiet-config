@@ -13,10 +13,22 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics
+        include: health,info,metrics,prometheus
+      base-path: /actuator
   endpoint:
     health:
       show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 jwt:
   secret: ${JWT_SECRET:ZmY4NjMyYzZmYzVhMzg2ZDc4MTQ0ODI0MmE5N2Q0YzE5MjM0ZTQ5YzVhZGE0Njg2YzU0YjYxMzA5M2QzYzI4NjU4NQ==}

@@ -29,6 +29,26 @@ eureka:
     hostname: api-gateway
 
 management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
   endpoint:
-    gateway:
+    health:
+      show-details: always
+    metrics:
       enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: api-gateway
+    distribution:
+      slo:
+        http.server.requests: 10ms, 50ms, 100ms, 200ms, 500ms, 1s, 2s
+      percentiles-histogram:
+        http.server.requests: true
